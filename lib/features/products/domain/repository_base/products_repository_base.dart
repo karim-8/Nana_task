@@ -5,7 +5,6 @@ import 'package:nana_mobile_task/features/products/data/model/products/products_
 
 abstract class ProductsRepositoryBase {
   Future<Either<Failure, ProductsRequestModel>> getProducts({
-    required String limit,
-    required String offset,
+    required String page,
   });
 }

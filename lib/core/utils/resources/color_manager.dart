@@ -18,6 +18,7 @@ class ColorManager {
   static const Color stepperTextGrey = Color(0xffC3C5C8);
   static const Color greenFill = Color(0xffE9F9F1);
   static const Color goldy = Color(0xffFFCB31);
+  static const Color lightPink = Color(0xfffcede6);
 
   static const MaterialColor primarySwatch = MaterialColor(
     0xff1DBF73,

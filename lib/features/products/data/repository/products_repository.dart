@@ -15,14 +15,10 @@ class ProductsRepository extends ProductsRepositoryBase {
 
   @override
   Future<Either<Failure, ProductsRequestModel>> getProducts({
-    required String limit,
-    required String offset,
+    required String page,
   }) async {
     try {
-      final response = await remoteDatasource.getProducts(
-        limit: limit,
-        offset: offset,
-      );
+      final response = await remoteDatasource.getProducts(page: page,);
       return Right(response);
     } on RemoteException catch (exception) {
       log(name: 'Remote Exception', exception.errorModel.statusMessage);

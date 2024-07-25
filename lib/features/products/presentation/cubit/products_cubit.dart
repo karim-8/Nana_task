@@ -6,23 +6,26 @@ import 'package:nana_mobile_task/features/products/domain/use_case/products_use_
 import 'package:nana_mobile_task/features/products/presentation/cubit/products_state.dart';
 
 
-class ProductsCubit extends Cubit<ProductsStateBase> {
+class ProductsCubit extends Cubit<ProductsState> {
 
   final ProductsRepositoryBase repository;
+  var currentPage = 1;
+  List<Results>? dataResults = [];
+  var deductedAmount = 340;
 
   ProductsCubit({
     required this.repository,
-  }) : super(ProductsInitialState());
+  }) : super(ProductsState());
 
 
   ProductsRequestModel? products;
 
   Future<void> getProductsData() async {
+    state.results;
 
     final result = await ProductsUseCase(
       repository: repository,
-      limit: '10',
-      offset: '0',
+      page: incrementCurrentPage().toString(),
     )();
     result.fold(
       (failure) => emit(
@@ -31,12 +34,41 @@ class ProductsCubit extends Cubit<ProductsStateBase> {
           productsData: null
         ),
       ),
-      (data) => emit(
-        ProductsState(
+      (data)  {
+      toggleIndicator(false);
+
+
+      dataResults?.addAll(data.results ?? []);
+
+       emit(
+        state.copyWith(
           callStatus: CallStatus.loaded,
           productsData: data,
+          results: dataResults,
+          gridHeightSize: calculateGridHeight()
         ),
-      )
+      );
+      } 
     );
   } 
+
+  int calculateGridHeight() {
+    if(dataResults != null && dataResults!.isNotEmpty){
+      final int itemsCount = dataResults!.length;
+      final int rowHeight = itemsCount * 100;
+      var height = (currentPage > 2) ? rowHeight - deductedAmount : rowHeight;
+      deductedAmount += 200;
+      return height;
+    }
+    else {
+      return 320;
+    }
+  }
+
+  void toggleIndicator(bool show) {
+    emit(state.copyWith(indicatorStatus: show));
+  }
+
+  int incrementCurrentPage() => currentPage++;
+  
 }

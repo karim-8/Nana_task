@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nana_mobile_task/core/utils/shared_widgets/app_grid_view.dart';
+import 'package:nana_mobile_task/core/utils/shared_widgets/grid_utilities.dart';
 import 'package:nana_mobile_task/features/products/presentation/cubit/products_cubit.dart';
 import 'package:nana_mobile_task/features/products/presentation/cubit/products_state.dart';
 import '/core/utils/resources/resources_exporter.dart';
@@ -14,153 +16,110 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      
       child: Scaffold(
+
         appBar: AppBar(
+          backgroundColor: ColorManager.lightPink,
+          centerTitle: true,
           title: Text(
             StringsManager.products,
             style: TextStyleManager.screenTitle,
           ),
         ),
 
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: 
-            Column(
-              children: [
+        body: SingleChildScrollView(
+             // physics: const BouncingScrollPhysics(),
+              child: 
+              Container(
+                color: ColorManager.blackColor,
+                child: Column(
+                  children: [
+                    
+                    /// Snacks Section
+                       BlocBuilder<ProductsCubit, ProductsStateBase>(
+                        builder: (context, state) {
 
-                Container(
-                  width: 50, height: 100,
-                  color: Colors.red,),
+                          if(state is ProductsState) {
+    
+                             log("Data is ${state.productsData ?? "No Data"}");
+                            return AppGridView(
+                              gridDelegateView: horizontalGridDelegate(),
+                              sectionHeaderTitle: "Snacks Product",
+                              gridScrollDirection: Axis.horizontal,
+                              productsData: state.results,
+                              gridHeightView: 350,
+                              shouldScroll: true,
+                              gridBackgroundColor: Colors.white,);
+                          }
+                          return const SizedBox();
+                        },
+                      ),
 
+
+    
+               
+       // Middle part here
+
+                       BlocBuilder<ProductsCubit, ProductsStateBase>(
+                        builder: (context, state) {
+                          if(state is ProductsState) {
+                             log("Data is ${state.productsData ?? "No Data"}");
+                             // check items number
+      
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 0),
+                              child: AppGridView(
+                                shouldPresentLoadMoreIndicator: state.indicatorStatus,
+                                shouldPresentLoadMoreButton: true,
+                                gridBackgroundColor: Colors.white,
+                                gridHeightView: state.gridHeightSize!.toDouble(),
+                                numberOfColumns: 3,
+                                shouldScroll: false,
+                                gridScrollDirection: Axis.vertical,
+                                sectionHeaderTitle: "Most use product",
+                                productsData: state.results,
+                               gridDelegateView: verticalGridDelegate(),),
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                      ),
+
+
+
+                   
+
+               
+      // Recommende Section
+                        BlocBuilder<ProductsCubit, ProductsStateBase>(
+                        builder: (context, state) {
+                          if(state is ProductsState) {
+                             log("Data is ${state.productsData ?? "No Data"}");
+                            return AppGridView(
+                              sectionHeaderTitle: "Recommendation",
+                            productsData: state.results,
+                             gridDelegateView: horizontalGridDelegate(),
+                             gridScrollDirection: Axis.horizontal,);
+                          }
+                          return const SizedBox();
+                        },
+                      ),
+
+
+
+                  ],
+                ),
+              ),
+
+
+            ),
           
-
-                   BlocBuilder<ProductsCubit, ProductsStateBase>(
-                    builder: (context, state) {
-                      if(state is ProductsState) {
-                         log("Data is ${state.productsData ?? "No Data"}");
-                        return Container(
-                        width: 250, height: 250,
-                        color: Colors.blue,
-                        child:  Text("Data is ${state.productsData?.results?[0].id ?? "No Data"}", 
-                        style:  const TextStyle(
-                          color: Colors.black
-                        ),),
-                      );
-                      }
-                      return const SizedBox();
-
-                    },
-                  ),
-              ],
-            )
-          ),
-        ),
+        
       ),
     );
   }
 }
 
-/*
-              
-              
-                  BlocBuilder<ProductsCubit, ProductsStates>(
-                    builder: (context, state) {
-                      return AppForm(
-                        type: TextInputType.emailAddress,
-                      //  controller: context.read<ProductsCubit>().emailController,
-                        error: StringsManager.emailIsRequired,
-                        textInputAction: TextInputAction.next,
-                      );
-                    },
-                  ),
-                  20.00.heightSpace,
-                  Text(
-                    StringsManager.password,
-                    style: TextStyleManager.screenBodySmall,
-                  ),
-                  10.00.heightSpace,
-                  BlocBuilder<ProductsCubit, ProductsStates>(
-                    builder: (context, state) {
-                      return AppForm(
-                        type: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.done,
-                        isPassword: true,
-                        controller:
-                            context.read<ProductsCubit>().passwordController,
-                        error: StringsManager.passwordIsRequired,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return StringsManager.passwordIsRequired;
-                          }
-                          return null;
-                        },
-                      );
-                    },
-                  ),
-      
-                  BlocConsumer<ProductsCubit, ProductsStates>(
-                    listener: (context, state) {
-                      if (state is ProductsState) {
-                        switch (state.callStatus) {
-                          case CallStatus.error:
-                            designToastDialog(
-                              context: context,
-                              toast: Toast.error,
-                              message: state.pro ??
-                                  StringsManager.anErrorOccurred,
-                            );
-                            break;
-                          case CallStatus.loaded:
-                          //  context.read<HomeCubit>().getProfile();
 
-                            navigateAndFinish(
-                              context,
-                              RouteManager.products,
-                            );
-                            designToastDialog(
-                              context: context,
-                              toast: Toast.success,
-                              message: StringsManager.loginSuccess,
-                            );
 
-                            break;
-                          default:
-                        }
-                      }
-                    },
-                    builder: (context, state) => AppButton(
-                      isLoading: state is ProductsState &&
-                          state.callStatus == CallStatus.loading,
-                      text: StringsManager.login,
-                      isUpperCase: false,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.read<ProductsCubit>().login();
-                        }
-                      },
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        StringsManager.doNotHaveAccount,
-                        style: TextStyleManager.screenBodySmall,
-                      ),
-                      SilentTextButton(
-                        label: StringsManager.register,
-                        onTap: () {
-                          navigateTo(
-                            context,
-                            RouteManager.products,
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
-         
-*/
