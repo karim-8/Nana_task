@@ -1,4 +1,7 @@
-class ProductsRequestModel {
+import 'package:equatable/equatable.dart';
+
+// ignore: must_be_immutable
+class ProductsRequestModel extends Equatable{
   Info? info;
   List<Results>? results;
 
@@ -14,6 +17,9 @@ class ProductsRequestModel {
     }
   }
 
+   ProductsRequestModel.empty()
+   : this(info: Info(count: 10,pages: 1, next: ""), results: [Results()]);
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data =  <String, dynamic>{};
     if (info != null) {
@@ -24,6 +30,9 @@ class ProductsRequestModel {
     }
     return data;
   }
+  
+  @override
+  List<Object?> get props => [];
 }
 
 class Info {

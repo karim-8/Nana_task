@@ -23,6 +23,7 @@ class ProductsRemoteDatasource extends ProductsRemoteDatasourceBase {
     try {
       final response = await remoteRequestManager
           .get(url: RemoteConstants.productApi, query: {"page": page});
+          
       return ProductsRequestModel.fromJson(response.data);
     } on DioException catch (exception) {
       throw RemoteException(

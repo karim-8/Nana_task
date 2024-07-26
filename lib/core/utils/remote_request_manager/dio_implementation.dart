@@ -1,27 +1,34 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:mockito/mockito.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '/core/remote/remote_constants.dart';
 import '/core/utils/remote_request_manager/remote_request_manager.dart';
 
 class DioImplementation extends RemoteRequestManager {
-  final dio = Dio(
-    BaseOptions(
+
+  final Dio dio;
+
+  DioImplementation(this.dio) {
+    dio.options = BaseOptions(
       receiveDataWhenStatusError: true,
       baseUrl: RemoteConstants.baseUrl,
-    ),
-  )..interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        request: true,
-        responseBody: false,
-        error: true,
-        responseHeader: false,
-        compact: true,
-        maxWidth: 90,
-      ),
     );
+
+    // dio.interceptors.add(
+    //   PrettyDioLogger(
+    //     requestHeader: true,
+    //     requestBody: true,
+    //     request: true,
+    //     responseBody: false,
+    //     error: true,
+    //     responseHeader: false,
+    //     compact: true,
+    //     maxWidth: 90,
+    //   ),
+    // );
+  }
+
 
   @override
   Future post({
@@ -95,3 +102,4 @@ extension on DioImplementation {
     }
   }
 }
+

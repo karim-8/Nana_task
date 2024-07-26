@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nana_mobile_task/core/utils/remote_request_manager/dio_implementation.dart';
 import 'package:nana_mobile_task/core/utils/remote_request_manager/remote_request_manager.dart';
@@ -25,6 +26,6 @@ class Injector {
 
     /// Remote Request Manager.
     injector
-        .registerLazySingleton<RemoteRequestManager>(() => DioImplementation());
+        .registerLazySingleton<RemoteRequestManager>(() => DioImplementation(Dio()));
   }
 }

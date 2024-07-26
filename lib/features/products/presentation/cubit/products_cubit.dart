@@ -21,7 +21,6 @@ class ProductsCubit extends Cubit<ProductsState> {
   ProductsRequestModel? products;
 
   Future<void> getProductsData() async {
-    state.results;
 
     final result = await ProductsUseCase(
       repository: repository,
