@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import '/core/error/remote_exception.dart';
@@ -29,10 +28,5 @@ class ProductsRemoteDatasource extends ProductsRemoteDatasourceBase {
       throw RemoteException(
           errorModel: RemoteErrorModel.fromJson(exception.response!.data));
     }
-  }
-
-  List<ProductsRequestModel> productsRequestModelFromJsonv1(String str) {
-    return List<ProductsRequestModel>.from(
-        json.decode(str).map((x) => ProductsRequestModel.fromJson(x)));
   }
 }

@@ -18,7 +18,7 @@ class ProductsRepository extends ProductsRepositoryBase {
     required String page,
   }) async {
     try {
-      final response = await remoteDatasource.getProducts(page: page,);
+      final response = await remoteDatasource.getProducts(page: page);
       return Right(response);
     } on RemoteException catch (exception) {
       log(name: 'Remote Exception', exception.errorModel.statusMessage);
