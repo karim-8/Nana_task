@@ -95,11 +95,12 @@ class AppGridView extends StatelessWidget {
                                       SizedBox(
                                         width: 120,
                                         height: 120,
-                                        child: Image.network(
+                                        child: (productsData != null && productsData!.isNotEmpty) ? Image.network(
+                                          key: Key("$index"),
                                           productsData?[index].image ??
                                               "",
                                           fit: BoxFit.cover,
-                                        ),
+                                        ): const SizedBox(key: Key("MockImage"),),
                                       ),
                                     ],
                                   ),

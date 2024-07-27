@@ -4,8 +4,6 @@ import '/core/utils/resources/resources_exporter.dart';
 
 abstract class ProductsStateBase {}
 
-class ProductsInitialState extends ProductsStateBase {}
-
 class ProductsState extends ProductsStateBase with EquatableMixin {
   final CallStatus callStatus;
   final ProductsRequestModel? productsData;

@@ -20,6 +20,7 @@ class ProductsScreen extends StatelessWidget {
       child: Scaffold(
 
         appBar: AppBar(
+          key: const Key("appBarKey"),
           backgroundColor: ColorManager.lightPink,
           centerTitle: true,
           title: Text(
@@ -40,7 +41,8 @@ class ProductsScreen extends StatelessWidget {
                        BlocBuilder<ProductsCubit, ProductsStateBase>(
                         builder: (context, state) {
 
-                          if(state is ProductsState) {
+// && state.productsData?.info != null
+                          if(state is ProductsState ) {
     
                              log("Data is ${state.productsData ?? "No Data"}");
                             return AppGridView(
@@ -63,7 +65,8 @@ class ProductsScreen extends StatelessWidget {
 
                        BlocBuilder<ProductsCubit, ProductsStateBase>(
                         builder: (context, state) {
-                          if(state is ProductsState) {
+                          // && state.productsData?.info != null
+                          if(state is ProductsState ) {
                              log("Data is ${state.productsData ?? "No Data"}");
                              // check items number
       
@@ -94,7 +97,8 @@ class ProductsScreen extends StatelessWidget {
       // Recommende Section
                         BlocBuilder<ProductsCubit, ProductsStateBase>(
                         builder: (context, state) {
-                          if(state is ProductsState) {
+                          //&& state.productsData?.info != null
+                          if(state is ProductsState ) {
                              log("Data is ${state.productsData ?? "No Data"}");
                             return AppGridView(
                               sectionHeaderTitle: "Recommendation",

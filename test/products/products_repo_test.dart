@@ -46,8 +46,8 @@ void main() {
 
     test('Testing Products Repository Failure', () async {
       // Arrange
-      final remoteException = RemoteException(
-        errorModel: const RemoteErrorModel(statusMessage: 'An error occurred'),
+      const remoteException = RemoteException(
+        errorModel: RemoteErrorModel(statusMessage: 'An error occurred'),
       );
 
       when(mockRemoteDatasource.getProducts(page: TestConstant.page))

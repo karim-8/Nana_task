@@ -1,30 +1,84 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:io';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:nana_mobile_task/core/injection/injector.dart';
+import 'package:nana_mobile_task/core/utils/resources/observer.dart';
+import 'package:nana_mobile_task/features/products/presentation/cubit/products_cubit.dart';
+import 'package:nana_mobile_task/features/products/presentation/cubit/products_state.dart';
+import 'package:nana_mobile_task/features/products/presentation/user_interface/products/screens/products_screen.dart';
+import 'products/product_use_case_test.mocks.dart';
 
-// import 'package:nana_mobile_task/main.dart';
+class MockCounterCubit extends MockCubit<ProductsState>
+    implements ProductsCubit {}
 
-// void main() {
-//   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//     // Build our app and trigger a frame.
-//     await tester.pumpWidget(const MyApp());
+class MockCounterState extends Fake implements ProductsStateBase {}
 
-//     // Verify that our counter starts at 0.
-//     expect(find.text('0'), findsOneWidget);
-//     expect(find.text('1'), findsNothing);
+void main() {
+  group('Products Screen', () {
+    setUpAll(() {
+      HttpOverrides.global = null;
+      WidgetsFlutterBinding.ensureInitialized();
+      Injector.init();
+      Bloc.observer = Observer();
+      registerFallbackValue(MockCounterState());
+    });
 
-//     // Tap the '+' icon and trigger a frame.
-//     await tester.tap(find.byIcon(Icons.add));
-//     await tester.pump();
+    Widget createWidgetUnderTest() {
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider<ProductsCubit>(
+            create: (BuildContext ctx) =>
+                ProductsCubit(repository: MockMockProductsRepositoryBase()),
+          ),
+        ],
+        child: const MaterialApp(
+          home: ProductsScreen(),
+        ),
+      );
+    }
 
-//     // Verify that our counter has incremented.
-//     expect(find.text('0'), findsNothing);
-//     expect(find.text('1'), findsOneWidget);
-//   });
-// }
+    testWidgets(
+      "App bar widget test",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(createWidgetUnderTest());
+        expect(find.byKey(const Key('appBarKey')), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      "Grid Items widget test",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(createWidgetUnderTest());
+        expect(find.byKey(const Key('MockImage')), findsWidgets);
+      },
+    );
+
+    testWidgets(
+      "Snacks Section widget test",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(createWidgetUnderTest());
+        expect(find.text("Snacks Product"), findsWidgets);
+      },
+    );
+
+    testWidgets(
+      "Most use product Section widget test",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(createWidgetUnderTest());
+        expect(find.text("Most use product"), findsWidgets);
+      },
+    );
+
+    testWidgets(
+      "Recommendation Section widget test",
+      (WidgetTester tester) async {
+        await tester.pumpWidget(createWidgetUnderTest());
+        expect(find.text("Recommendation"), findsWidgets);
+      },
+    );
+  });
+}
