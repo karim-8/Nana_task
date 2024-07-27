@@ -16,7 +16,10 @@ I did three Types of Testing:
 - Unit Testing 
 - Integrtion Testing
 
-For me i wanted to cover all class that have functionality but for the time frame limit i have applied to the main features part
+![Screenshot 2024-07-28 at 12 13 33 AM](https://github.com/user-attachments/assets/3ab7b30a-ebb7-492f-bbce-243a7c28e5e4)
+
+
+I wanted to cover all class that have functionality but for the time frame limit i have applied to the main features part
 
 ![Screenshot 2024-07-27 at 8 59 53 PM](https://github.com/user-attachments/assets/36cb8412-9432-4191-99ca-f2872caf42a2)
 
