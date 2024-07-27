@@ -32,34 +32,31 @@ class LoadMoreButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                
                 // Loading Indicator
-                 (isLoading) ? const SizedBox(
-                  height: 15,
-                  width: 15,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                  ),
-                ): const SizedBox(),
-
+                (isLoading)
+                    ? const SizedBox(
+                        height: 15,
+                        width: 15,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.green),
+                        ),
+                      )
+                    : const SizedBox(),
 
                 const SizedBox(
                   width: 8,
                 ),
 
-
                 // Title
                 Text(
-                    title,
-                    style: const TextStyle(
-                        color: Colors.green,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                  ),
-                
-
-
+                  title,
+                  style: const TextStyle(
+                      color: Colors.green,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ],

@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import '/core/error/remote_exception.dart';
 import '/core/remote/error_model.dart';
@@ -22,7 +21,7 @@ class ProductsRemoteDatasource extends ProductsRemoteDatasourceBase {
     try {
       final response = await remoteRequestManager
           .get(url: RemoteConstants.productApi, query: {"page": page});
-          
+
       return ProductsRequestModel.fromJson(response.data);
     } on DioException catch (exception) {
       throw RemoteException(

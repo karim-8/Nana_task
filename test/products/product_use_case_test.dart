@@ -9,8 +9,8 @@ import "package:nana_mobile_task/features/products/domain/use_case/products_use_
 import "product_use_case_test.mocks.dart";
 import "test_constant.dart";
 
-
-class MockProductsRepositoryBase extends Mock implements ProductsRepositoryBase{}
+class MockProductsRepositoryBase extends Mock
+    implements ProductsRepositoryBase {}
 
 @GenerateMocks([MockProductsRepositoryBase])
 Future<void> main() async {
@@ -18,50 +18,44 @@ Future<void> main() async {
   late ProductsUseCase productsUseCase;
 
   setUp(() {
-   mockProductsRepo = MockMockProductsRepositoryBase();
-   productsUseCase = ProductsUseCase(repository: mockProductsRepo, page: TestConstant.page);
+    mockProductsRepo = MockMockProductsRepositoryBase();
+    productsUseCase =
+        ProductsUseCase(repository: mockProductsRepo, page: TestConstant.page);
   });
 
-group("Test Products Usecase", (){
-
-  test("Test Products Usecase Success", () async {
-
+  group("Test Products Usecase", () {
+    test("Test Products Usecase Success", () async {
       // Arrange
       when(mockProductsRepo.getProducts(page: TestConstant.page))
-          .thenAnswer((_) async => Right(ProductsRequestModel()));
+          .thenAnswer((_) async => const Right(ProductsRequestModel()));
 
       // Act
       final result = await productsUseCase.call();
 
       // Assert
       expect(result, isA<Right>());
-      expect(result, equals(Right(ProductsRequestModel())));
+      expect(result, equals(const Right(ProductsRequestModel())));
       verify(mockProductsRepo.getProducts(page: TestConstant.page));
       verifyNoMoreInteractions(mockProductsRepo);
-  });
-
-
-    test("Test Products Usecase failure", () async {
-
-    // Arrange
-      Either<RemoteFailure, ProductsRequestModel> failureResponse =
-          const Left(RemoteFailure(message: "Error parsing data"));
-    
-    when(productsUseCase.call()).thenAnswer((_) async {
-      return failureResponse;
     });
 
-    // Act
-    final result = await productsUseCase.call();
+    test("Test Products Usecase failure", () async {
+      // Arrange
+      Either<RemoteFailure, ProductsRequestModel> failureResponse =
+          const Left(RemoteFailure(message: "Error parsing data"));
 
-    // Assert
-    expect(result, isA<Left<RemoteFailure, dynamic>>());
-    expect(result, failureResponse);
-    verify(productsUseCase.call()).called(1);
-    verifyNoMoreInteractions(mockProductsRepo);
+      when(productsUseCase.call()).thenAnswer((_) async {
+        return failureResponse;
+      });
+
+      // Act
+      final result = await productsUseCase.call();
+
+      // Assert
+      expect(result, isA<Left<RemoteFailure, dynamic>>());
+      expect(result, failureResponse);
+      verify(productsUseCase.call()).called(1);
+      verifyNoMoreInteractions(mockProductsRepo);
+    });
   });
-
-
-});
-
 }

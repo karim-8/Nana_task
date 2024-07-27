@@ -6,9 +6,7 @@ import '../../../../core/utils/remote_request_manager/models_exporter.dart';
 import '../../domain/repository_base/products_repository_base.dart';
 import '../datasource/products_datasource.dart';
 
-
 class ProductsRepository extends ProductsRepositoryBase {
-
   final ProductsRemoteDatasourceBase remoteDatasource;
 
   ProductsRepository({required this.remoteDatasource});

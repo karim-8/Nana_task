@@ -9,7 +9,8 @@ class RemoteErrorModel extends Equatable {
 
   factory RemoteErrorModel.fromJson(Map<String, dynamic> json) {
     return RemoteErrorModel(
-      statusMessage: json['message'] ?? 'Sorry there is an error, Please try again!',
+      statusMessage:
+          json['message'] ?? 'Sorry there is an error, Please try again!',
     );
   }
 

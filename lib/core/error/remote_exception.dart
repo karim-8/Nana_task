@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../remote/error_model.dart';
-class RemoteException extends Equatable implements Exception {
 
+class RemoteException extends Equatable implements Exception {
   final RemoteErrorModel errorModel;
 
   const RemoteException({
@@ -21,8 +21,7 @@ class RemoteException extends Equatable implements Exception {
       errorModel: errorModel ?? this.errorModel,
     );
   }
-  
+
   @override
   List<Object?> get props => [errorModel];
 }
-

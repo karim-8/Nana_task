@@ -12,9 +12,9 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<ProductsCubit, ProductsStateBase>(
       listener: (context, state) async {
-          if (context.mounted) {
-              navigateAndFinish(context, RouteManager.products);
-          }
+        if (context.mounted) {
+          navigateAndFinish(context, RouteManager.products);
+        }
       },
       child: Container(
         color: ColorManager.whiteColor,

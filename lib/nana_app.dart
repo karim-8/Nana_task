@@ -14,11 +14,9 @@ class NanaApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => ProductsCubit(
-            repository: injector(),
-          )
-            ..getProductsData()
-        ),
+            create: (BuildContext context) => ProductsCubit(
+                  repository: injector(),
+                )..getProductsData()),
       ],
       child: MaterialApp(
         title: StringsManager.products,

@@ -117,4 +117,3 @@ String chooseTitle(Toast toast) {
 }
 
 const initialGender = 0;
-

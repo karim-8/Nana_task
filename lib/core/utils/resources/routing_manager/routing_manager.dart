@@ -32,7 +32,7 @@ class RouteManager {
       case splash:
         return pageRoute(const SplashScreen());
       case products:
-        return pageRoute(ProductsScreen());
+        return pageRoute(const ProductsScreen());
       default:
         return pageRoute(const UnknownRouteWidget());
     }

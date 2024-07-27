@@ -13,19 +13,20 @@ import "test_constant.dart";
 class MockRemoteRequestManager extends Mock implements RemoteRequestManager {}
 
 @GenerateMocks([MockRemoteRequestManager])
-
 Future<void> main() async {
   late ProductsRemoteDatasource datasource;
   late MockRemoteRequestManager mockRemoteRequestManager;
 
   setUp(() {
     mockRemoteRequestManager = MockMockRemoteRequestManager();
-    datasource = ProductsRemoteDatasource(remoteRequestManager: mockRemoteRequestManager);
+    datasource = ProductsRemoteDatasource(
+        remoteRequestManager: mockRemoteRequestManager);
   });
 
-   group('Product Remote Datasource Testing', () {
+  group('Product Remote Datasource Testing', () {
     // Api Mock Data
-    final productsRequestModel = ProductsRequestModel.fromJson(TestConstant.responseJson);
+    final productsRequestModel =
+        ProductsRequestModel.fromJson(TestConstant.responseJson);
 
     test('Test Fetching ProductsRequestModel Data successfully', () async {
       // Arrange
@@ -33,9 +34,9 @@ Future<void> main() async {
         url: RemoteConstants.productApi,
         query: {'page': TestConstant.page},
       )).thenAnswer((_) async => Response(
-        data: TestConstant.responseJson,
-        requestOptions: RequestOptions(path: ''),
-      ));
+            data: TestConstant.responseJson,
+            requestOptions: RequestOptions(path: ''),
+          ));
 
       // Act
       final result = await datasource.getProducts(page: TestConstant.page);
@@ -65,7 +66,8 @@ Future<void> main() async {
       )).thenThrow(dioException);
 
       // Act & Assert
-      expect(() async => await datasource.getProducts(page: TestConstant.page), throwsA(isA<RemoteException>()));
+      expect(() async => await datasource.getProducts(page: TestConstant.page),
+          throwsA(isA<RemoteException>()));
       verify(mockRemoteRequestManager.get(
         url: RemoteConstants.productApi,
         query: {'page': TestConstant.page},
@@ -74,4 +76,3 @@ Future<void> main() async {
     });
   });
 }
-

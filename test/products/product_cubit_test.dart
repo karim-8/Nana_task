@@ -13,7 +13,8 @@ import 'product_use_case_test.dart';
 import 'product_use_case_test.mocks.dart';
 import 'test_constant.dart';
 
- class MockProductsUseCase extends Mock implements UseCaseBase<ProductsRequestModel> {}
+class MockProductsUseCase extends Mock
+    implements UseCaseBase<ProductsRequestModel> {}
 
 @GenerateMocks([MockProductsUseCase])
 void main() {
@@ -25,19 +26,19 @@ void main() {
     mockProductsRepository = MockMockProductsRepositoryBase();
     mockProductsUseCase = MockMockProductsUseCase();
 
-    when(mockProductsUseCase.call())
-        .thenAnswer((_) async => const Right(ProductsRequestModel(results: []))); 
+    when(mockProductsUseCase.call()).thenAnswer(
+        (_) async => const Right(ProductsRequestModel(results: [])));
 
     productsCubit = ProductsCubit(repository: mockProductsRepository);
   });
 
   group('Test ProductsCubit', () {
-
     blocTest<ProductsCubit, ProductsState>(
       'Test getData successfully',
       build: () {
         when(mockProductsRepository.getProducts(page: TestConstant.page))
-            .thenAnswer((_) async => const Right(ProductsRequestModel(results: [])));
+            .thenAnswer(
+                (_) async => const Right(ProductsRequestModel(results: [])));
         return productsCubit;
       },
       act: (cubit) async => await cubit.getProductsData(),
@@ -53,25 +54,26 @@ void main() {
           callStatus: CallStatus.loaded,
           productsData: const ProductsRequestModel(results: []),
           results: [],
-          gridHeightSize: 320, // Verify this depending on the actual implementation
+          gridHeightSize:
+              320, // Verify this depending on the actual implementation
           indicatorStatus: false,
         ),
       ],
     );
-   
-    test('calculateGridHeight returns correct height based on results and current page', () {
-      productsCubit.dataResults = List.generate(5, (index) => Results()); // Assuming Results has a default constructor
+
+    test('Calculate GridHeight Test', () {
+      productsCubit.dataResults = List.generate(5, (index) => Results());
       productsCubit.currentPage = 3;
 
       final height = productsCubit.calculateGridHeight();
-      
-      expect(height, 160); // 5 items * 100 height per item - 200 deductedAmount
+
+      expect(height, 160);
     });
 
-    test('toggleIndicator updates the indicator status', () {
+    test('ToggleIndicator Indicator Status Test', () {
       productsCubit.toggleIndicator(true);
       expect(productsCubit.state.indicatorStatus, true);
-      
+
       productsCubit.toggleIndicator(false);
       expect(productsCubit.state.indicatorStatus, false);
     });

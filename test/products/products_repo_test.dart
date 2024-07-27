@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -14,21 +12,23 @@ import 'package:nana_mobile_task/features/products/data/repository/products_repo
 import 'products_repo_test.mocks.dart';
 import 'test_constant.dart';
 
-class MockProductsRemoteDataSource extends Mock implements ProductsRemoteDatasourceBase{}
+class MockProductsRemoteDataSource extends Mock
+    implements ProductsRemoteDatasourceBase {}
 
 @GenerateMocks([MockProductsRemoteDataSource])
-
 void main() {
   late ProductsRepository repository;
   late MockProductsRemoteDataSource mockRemoteDatasource;
 
   setUp(() {
-    mockRemoteDatasource = MockMockProductsRemoteDataSource();//MockProductsRemoteDatasourceBase();
+    mockRemoteDatasource =
+        MockMockProductsRemoteDataSource(); 
     repository = ProductsRepository(remoteDatasource: mockRemoteDatasource);
   });
 
   group('Testing Products Repository', () {
-    final productsRequestModel = ProductsRequestModel.fromJson(TestConstant.responseJson);
+    final productsRequestModel =
+        ProductsRequestModel.fromJson(TestConstant.responseJson);
 
     test('Testing Products Repository Success', () async {
       // Arrange
@@ -57,11 +57,10 @@ void main() {
       final result = await repository.getProducts(page: TestConstant.page);
 
       // Assert
-      expect(result, equals(const Left(RemoteFailure(message: 'An error occurred'))));
+      expect(result,
+          equals(const Left(RemoteFailure(message: 'An error occurred'))));
       verify(mockRemoteDatasource.getProducts(page: TestConstant.page));
       verifyNoMoreInteractions(mockRemoteDatasource);
     });
   });
 }
-
-

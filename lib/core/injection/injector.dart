@@ -25,7 +25,7 @@ class Injector {
             ));
 
     /// Remote Request Manager.
-    injector
-        .registerLazySingleton<RemoteRequestManager>(() => DioImplementation(Dio()));
+    injector.registerLazySingleton<RemoteRequestManager>(
+        () => DioImplementation(Dio()));
   }
 }

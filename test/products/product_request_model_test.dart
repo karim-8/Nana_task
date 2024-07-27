@@ -133,7 +133,7 @@ void main() {
     });
   });
 
- group('Test Origin Model', () {
+  group('Test Origin Model', () {
     const testName = 'Earth';
     const testUrl = 'earth_url';
 
@@ -176,7 +176,7 @@ void main() {
     });
   });
 
- group('Test Results Model', () {
+  group('Test Results Model', () {
     const testId = 1;
     const testName = 'Test Name';
     const testStatus = 'Alive';
@@ -187,7 +187,7 @@ void main() {
     const testUrl = 'test_url';
     const testCreated = '2024-01-01T00:00:00Z';
     final testEpisode = <String>['Episode 1', 'Episode 2'];
-    const testOrigin =  Origin(name: 'Origin Name', url: 'origin_url');
+    const testOrigin = Origin(name: 'Origin Name', url: 'origin_url');
     const testLocation = Origin(name: 'Location Name', url: 'location_url');
 
     final Results testResults = Results(
@@ -285,32 +285,30 @@ void main() {
     });
 
     group('EmptyModel', () {
-    const testStatus = 200;
-    const testSuccess = true;
+      const testStatus = 200;
+      const testSuccess = true;
 
-    const EmptyModel testEmptyModel = EmptyModel(
-      status: testStatus,
-      success: testSuccess,
-    );
+      const EmptyModel testEmptyModel = EmptyModel(
+        status: testStatus,
+        success: testSuccess,
+      );
 
-    test('should create an instance of EmptyModel', () {
-      expect(testEmptyModel.status, testStatus);
-      expect(testEmptyModel.success, testSuccess);
+      test('should create an instance of EmptyModel', () {
+        expect(testEmptyModel.status, testStatus);
+        expect(testEmptyModel.success, testSuccess);
+      });
+
+      test('fromJson should return a valid model', () {
+        final jsonMap = {
+          'status': testStatus,
+          'success': testSuccess,
+        };
+
+        final result = EmptyModel.fromJson(jsonMap);
+
+        expect(result.status, testStatus);
+        expect(result.success, testSuccess);
+      });
     });
-
-    test('fromJson should return a valid model', () {
-      final jsonMap = {
-        'status': testStatus,
-        'success': testSuccess,
-      };
-
-      final result = EmptyModel.fromJson(jsonMap);
-
-      expect(result.status, testStatus);
-      expect(result.success, testSuccess);
-    });
-
-  
-  });
   });
 }

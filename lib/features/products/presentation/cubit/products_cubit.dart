@@ -5,9 +5,7 @@ import 'package:nana_mobile_task/features/products/domain/repository_base/produc
 import 'package:nana_mobile_task/features/products/domain/use_case/products_use_case.dart';
 import 'package:nana_mobile_task/features/products/presentation/cubit/products_state.dart';
 
-
 class ProductsCubit extends Cubit<ProductsState> {
-
   final ProductsRepositoryBase repository;
   var currentPage = 1;
   List<Results>? dataResults = [];
@@ -17,49 +15,39 @@ class ProductsCubit extends Cubit<ProductsState> {
     required this.repository,
   }) : super(ProductsState());
 
-
   ProductsRequestModel? products;
 
   Future<void> getProductsData() async {
-
     final result = await ProductsUseCase(
       repository: repository,
       page: incrementCurrentPage().toString(),
     )();
     result.fold(
-      (failure) => emit(
-         ProductsState(
-          callStatus: CallStatus.error,
-          productsData: null
-        ),
-      ),
-      (data)  {
+        (failure) => emit(
+              ProductsState(callStatus: CallStatus.error, productsData: null),
+            ), (data) {
       toggleIndicator(false);
-
 
       dataResults?.addAll(data.results ?? []);
 
-       emit(
+      emit(
         state.copyWith(
-          callStatus: CallStatus.loaded,
-          productsData: data,
-          results: dataResults,
-          gridHeightSize: calculateGridHeight()
-        ),
+            callStatus: CallStatus.loaded,
+            productsData: data,
+            results: dataResults,
+            gridHeightSize: calculateGridHeight()),
       );
-      } 
-    );
-  } 
+    });
+  }
 
   int calculateGridHeight() {
-    if(dataResults != null && dataResults!.isNotEmpty){
+    if (dataResults != null && dataResults!.isNotEmpty) {
       final int itemsCount = dataResults!.length;
       final int rowHeight = itemsCount * 100;
       var height = (currentPage > 2) ? rowHeight - deductedAmount : rowHeight;
       deductedAmount += 200;
       return height;
-    }
-    else {
+    } else {
       return 320;
     }
   }
@@ -69,5 +57,4 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   int incrementCurrentPage() => currentPage++;
-  
 }
