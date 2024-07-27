@@ -49,6 +49,7 @@ void main() {
           results: null,
           gridHeightSize: 320,
           indicatorStatus: false,
+          recommendationResults: null
         ),
         ProductsState(
           callStatus: CallStatus.loaded,
@@ -57,6 +58,7 @@ void main() {
           gridHeightSize:
               320, // Verify this depending on the actual implementation
           indicatorStatus: false,
+          recommendationResults: []
         ),
       ],
     );
