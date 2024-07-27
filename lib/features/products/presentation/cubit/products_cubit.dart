@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nana_mobile_task/core/utils/remote_request_manager/models_exporter.dart';
 import 'package:nana_mobile_task/core/utils/resources/enums.dart';
@@ -35,10 +37,14 @@ class ProductsCubit extends Cubit<ProductsState> {
             callStatus: CallStatus.loaded,
             productsData: data,
             results: dataResults,
+            recommendationResults: setRecommendationItems(),
             gridHeightSize: calculateGridHeight()),
       );
     });
   }
+
+  List<Results>? setRecommendationItems() => dataResults?.reversed.toList();
+  
 
   int calculateGridHeight() {
     if (dataResults != null && dataResults!.isNotEmpty) {

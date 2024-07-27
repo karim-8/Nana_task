@@ -18,7 +18,7 @@ class RecommendationWidget extends StatelessWidget {
           log("Data is ${state.productsData ?? "No Data"}");
           return AppGridView(
             sectionHeaderTitle: "Recommendation",
-            productsData: state.results,
+            productsData: state.recommendationResults,
             gridDelegateView: horizontalGridDelegate(),
             gridScrollDirection: Axis.horizontal,
           );

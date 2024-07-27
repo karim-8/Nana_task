@@ -8,6 +8,7 @@ class ProductsState extends ProductsStateBase with EquatableMixin {
   final CallStatus callStatus;
   final ProductsRequestModel? productsData;
   List<Results>? results;
+  List<Results>? recommendationResults;
   int? gridHeightSize;
   final bool indicatorStatus;
 
@@ -17,6 +18,7 @@ class ProductsState extends ProductsStateBase with EquatableMixin {
     this.results,
     this.gridHeightSize = 320,
     this.indicatorStatus = false,
+    this.recommendationResults,
   });
   ProductsState copyWith({
     List<Results>? results,
@@ -24,6 +26,8 @@ class ProductsState extends ProductsStateBase with EquatableMixin {
     ProductsRequestModel? productsData,
     int? gridHeightSize,
     bool? indicatorStatus,
+    List<Results>? recommendationResults,
+
   }) {
     return ProductsState(
       results: results ?? this.results,
@@ -31,6 +35,7 @@ class ProductsState extends ProductsStateBase with EquatableMixin {
       productsData: productsData ?? this.productsData,
       gridHeightSize: gridHeightSize ?? this.gridHeightSize,
       indicatorStatus: indicatorStatus ?? this.indicatorStatus,
+      recommendationResults: recommendationResults ?? this.recommendationResults,
     );
   }
 
@@ -41,5 +46,6 @@ class ProductsState extends ProductsStateBase with EquatableMixin {
         gridHeightSize,
         indicatorStatus,
         results,
+        recommendationResults,
       ];
 }
