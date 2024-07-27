@@ -1,16 +1,25 @@
 # nana_mobile_task
 
-A new Flutter project.
+Hello 
 
-## Getting Started
+#UI Implementation
 
-This project is a starting point for a Flutter application.
+In this task i have done The UI and tried to make it as Flexiable as usual and tried to test on Device preview to measure on many screens.
 
-A few resources to get you started if this is your first Flutter project:
+<img width="1443" alt="Screenshot 2024-07-24 at 12 43 50 PM" src="https://github.com/user-attachments/assets/4e7d5289-a1fc-465e-bed1-725c29b406f6">
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#Testing 
+
+I did three Types of Testing:
+- Widget Testing
+- Unit Testing 
+- Integrtion Testing
+
+For me i wanted to cover all class that have functionality but for the time frame limit i have applied to the main features part
+
+![Screenshot 2024-07-27 at 8 59 53 PM](https://github.com/user-attachments/assets/36cb8412-9432-4191-99ca-f2872caf42a2)
+
+#Recommendation Part
+
+I wanted to call anothe api but i did a small logic for this part as more the client scroll recommendation data will be changed accordignly.
